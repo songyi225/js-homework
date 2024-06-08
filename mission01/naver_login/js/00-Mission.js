@@ -8,7 +8,7 @@ function getValueAtObject(obj, key) {
   if (obj.hasOwnProperty(key) === true) {
     value = obj[key];
   } else {
-    return 'Error!'
+    return '해당 key는 존재하지 않습니다.'
   }
 
   return value;
@@ -36,10 +36,10 @@ function getNumberAtArray(arr, index) {
   let value;
 
   if (!Array.isArray(arr)) {
-    return '배열이 아닙니다!';
+    return '배열이 아닙니다.';
   }
   if (index > arr.length -1 || index < 0){
-    return "Error!";
+    return "유효한 인덱스가 아닙니다.";
   } 
 
   value = arr[index];
@@ -48,7 +48,7 @@ function getNumberAtArray(arr, index) {
 
 const numbers = [10, 20, 30, 40, 50];
 
-// console.log(getNumberAtArray(person, 2)); // 배열이 아닙니다
+console.log(getNumberAtArray(person, 2)); // 배열이 아닙니다
 console.log(getNumberAtArray(numbers, 2)); // 30
 console.log(getNumberAtArray(numbers, 4)); // 50
 console.log(getNumberAtArray(numbers, 5)); // Error!
