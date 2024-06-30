@@ -1,4 +1,11 @@
-import { getNode, getNodes, removeClass, addClass, data } from "./lib/index.js";
+import {
+  getNode,
+  getNodes,
+  removeClass,
+  addClass,
+  data,
+  AudioPlayer,
+} from "./lib/index.js";
 /* 
 
 1. 클릭 이벤트 활성화
@@ -15,33 +22,34 @@ const nickName = getNode(".nickName");
 
 function handleClick(e) {
   const target = e.target;
+  console.log("event.target:", target);
   const li = target.closest("li");
-  const index = +li.dataset.index;
+  console.log(li);
+  const index = +li.dataset.index - 1;
 
   setBgColor(index);
   setImage(visual, index);
   setNameText(nickName, index);
   setClass(li, "is-active");
+  setAudio(index);
 }
 
 function setBgColor(index) {
   const elem = document.body;
-  elem.style.background = `linear-gradient(to bottom, ${
-    data[index - 1].color[0]
-  },${data[index - 1].color[1]})`;
+  elem.style.background = `linear-gradient(to bottom, ${data[index].color[0]},${data[index].color[1]})`;
 }
 
 function setImage(node, index) {
   if (typeof node === "string") node = getNode(node);
 
-  node.src = `./assets/${data[index - 1].name.toLowerCase()}.jpeg`;
-  node.alt = data[index - 1].alt;
+  node.src = `./assets/${data[index].name.toLowerCase()}.jpeg`;
+  node.alt = data[index].alt;
 }
 
 function setNameText(node, index) {
   if (typeof node === "string") node = getNode(node);
 
-  node.textContent = `${data[index - 1].name}`;
+  node.textContent = `${data[index].name}`;
 }
 
 function setClass(node, className) {
@@ -52,6 +60,13 @@ function setClass(node, className) {
   addClass(node, className);
 }
 
-listItems.forEach((li, i) => {
+function setAudio(index) {
+  const audio = new AudioPlayer(
+    `./assets/audio/${data[index].name.toLowerCase()}.m4a`
+  );
+  audio.play();
+}
+
+listItems.forEach((li) => {
   li.addEventListener("click", handleClick);
 });
